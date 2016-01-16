@@ -1,5 +1,5 @@
 var twitterKeysPage = require("./keys.js");
-//console.log(twitterKeysPage);
+var spotifyQuery = require('spotify');
 var task = process.argv[2];
 
 
@@ -19,18 +19,25 @@ switch(task) {
 };
 
 function getTweets(){
-  console.log("you have selected my tweets");
     var params = {screen_name: 'jeffshap1'};
     twitterKeysPage.twitterKeys.get('statuses/user_timeline', params, function(error, tweets, response){
       if (!error) {
-        console.log(tweets);
+        console.log("Here are your last 20 tweets:");
+        for (var i = 0; i < 20; i++) {
+          console.log((i+1)+". "+tweets[i].text);
+        };
+      } else if (error) {
+        console.log(error);
       }
     });
 };
 
-/*var params = {screen_name: 'jeffshap1'};
-twitterKeysPage.twitterKeys.get('statuses/user_timeline', params, function(error, tweets, response){
-  if (!error) {
-    console.log(tweets);
-  }
-});*/
+function getSpotifyQuery(){
+  spotify.search({ type: 'track', query: task }, function(err, data) {
+    if ( err ) {
+        console.log('Error occurred: ' + err);
+        return;
+    }
+    // Do something with 'data' 
+  });
+};
