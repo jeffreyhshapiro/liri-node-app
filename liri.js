@@ -1,6 +1,7 @@
 var twitterKeysPage = require("./keys.js");
 var spotifyQuery = require('spotify');
 var task = process.argv[2];
+var song = process.argv[3];
 
 
 switch(task) {
@@ -9,6 +10,7 @@ switch(task) {
     break;
   case "spotify-this-song":
     console.log("you have selected spotify");
+    getSpotifyQuery();
     break;
   case "movie-this":
     console.log("movies movies movies");
@@ -33,11 +35,22 @@ function getTweets(){
 };
 
 function getSpotifyQuery(){
-  spotify.search({ type: 'track', query: task }, function(err, data) {
+  spotifyQuery.search({ type: 'track', query: song }, function(err, data) {
     if ( err ) {
         console.log('Error occurred: ' + err);
         return;
-    }
-    // Do something with 'data' 
+    } else if (!err) {
+      for (var i = 0; i < data.tracks.items.length; i++) {
+        //console.log(data.tracks.items[i]);
+        console.log(data.tracks.items.album[i].name);
+        //console.log(data.tracks.items.artists.name[i]);
+      };
+      //artist
+      //song name
+      //album
+      //preview of link of song
+
+      //default whats my age again
+    };
   });
 };
