@@ -9,7 +9,6 @@ switch(task) {
     getTweets();
     break;
   case "spotify-this-song":
-    console.log("you have selected spotify");
     getSpotifyQuery();
     break;
   case "movie-this":
@@ -17,6 +16,7 @@ switch(task) {
     break;
   case "nasty-beats":
     console.log("Boots and cats and boots and cats and boots and cats and boots and cats");
+    console.log("http://www.virtualdrumming.com/drums/windows/hip-hop-drum-kits.html")
     break;
 };
 
@@ -35,22 +35,23 @@ function getTweets(){
 };
 
 function getSpotifyQuery(){
+  if (song = "undefined") {
+      song = "what's my age again"}; 
+
   spotifyQuery.search({ type: 'track', query: song }, function(err, data) {
     if ( err ) {
         console.log('Error occurred: ' + err);
         return;
     } else if (!err) {
+      console.log("Are any of these songs what you are looking for?");
+      console.log("");
       for (var i = 0; i < data.tracks.items.length; i++) {
-        //console.log(data.tracks.items[i]);
-        console.log(data.tracks.items.album[i].name);
-        //console.log(data.tracks.items.artists.name[i]);
+        console.log("Song: " +data.tracks.items[i].name);
+        console.log("Artist: " +data.tracks.items[i].artists[0].name);
+        console.log("Album: "+data.tracks.items[i].album.name);
+        console.log("Link: "+data.tracks.items[i].href);
+        console.log("");
+        };
       };
-      //artist
-      //song name
-      //album
-      //preview of link of song
-
-      //default whats my age again
-    };
-  });
-};
+    });
+  };
