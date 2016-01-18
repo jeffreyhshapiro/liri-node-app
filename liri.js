@@ -67,7 +67,7 @@ function getMovie(){
   if (fourthItem === undefined) {
     fourthItem = "Mr. Nobody";
   };
-  request('http://www.omdbapi.com/?t='+fourthItem+'&y=&plot=short&r=json', function (error, response, body) {
+  request('http://www.omdbapi.com/?t='+fourthItem+'&y=&plot=short&r=json&tomatoes=true', function (error, response, body) {
   if (!error && response.statusCode == 200) {
     body = JSON.parse(body);
     console.log("Title: "+body.Title);
@@ -77,6 +77,8 @@ function getMovie(){
     console.log("Language: "+body.Language);
     console.log("Plot: "+body.Plot);
     console.log("Actors: "+body.Actors);
+    console.log("RottenTomatoes Rating: "+body.tomatoRating);
+    console.log("RottenTomatoes Link: "+body.tomatoURL);
   };
   });
 };
@@ -86,7 +88,7 @@ function txtFile(){
     if (err) {
       throw err;
     } else if (!err) {
-      dataSplit = data.split(", ");
+      dataSplit = data.split(",");
       task = dataSplit[0];
       fourthItem = dataSplit[1];
       initializer();
