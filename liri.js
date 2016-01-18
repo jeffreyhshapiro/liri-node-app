@@ -1,11 +1,9 @@
-debugger;
 var twitterKeysPage = require("./keys.js");
 var spotifyQuery = require('spotify');
 var request = require('request');
 var fs = require('fs');
 var task = process.argv[2];
 var fourthItem = process.argv[3];
-
 
 function initializer(){
   switch(task) {
@@ -29,37 +27,18 @@ function initializer(){
 };
 
 function getTweets(){
-  var params = {screen_name: "jeffshap1"};
-  twitterKeysPage.twitterKeys.get('statuses/user_timeline', params, function(error, tweets, response){
-    if (!error) {
-
-      for (var i = 0; i < 20; i++) {
-
-      fs.appendFile("./log.txt", tweets, function(err){
-
-        if (err) {
-
-          console.log(err);
-
-        } else if (!err) {
-
+    var params = {screen_name: 'jeffshap1'};
+    twitterKeysPage.twitterKeys.get('statuses/user_timeline', params, function(error, tweets, response){
+      if (!error) {
         console.log("Here are your last 20 tweets:");
-
+        for (var i = 0; i < 20; i++) {
           console.log((i+1)+". "+tweets[i].text);
-        
         };
-
-      });
-
-    } if (error) {
-      console.log(error);
-    };
-
-  };
-
-  });
-
-  };
+      } else if (error) {
+        console.log(error);
+      }
+    });
+};
 
 function getSpotifyQuery(){
   if (fourthItem === undefined) {
