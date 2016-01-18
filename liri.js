@@ -1,25 +1,30 @@
+debugger;
 var twitterKeysPage = require("./keys.js");
 var spotifyQuery = require('spotify');
 var request = require('request');
+var fs = require('fs');
 var task = process.argv[2];
 var fourthItem = process.argv[3];
 
-
-switch(task) {
-  case "my-tweets":
-    getTweets();
-    break;
-  case "spotify-this-song":
-    getSpotifyQuery();
-    break;
-  case "movie-this":
-    console.log("movies movies movies");
-    getMovie();
-    break;
-  case "nasty-beats":
-    console.log("Boots and cats and boots and cats and boots and cats and boots and cats");
-    console.log("http://www.virtualdrumming.com/drums/windows/hip-hop-drum-kits.html")
-    break;
+function initializer(){
+  switch(task) {
+    case "my-tweets":
+      getTweets();
+      break;
+    case "spotify-this-song":
+      getSpotifyQuery();
+      break;
+    case "movie-this":
+      getMovie();
+      break;
+    case "do-what-it-says":
+      txtFile();
+      break;
+    case "nasty-beats":
+      console.log("Boots and cats and boots and cats and boots and cats and boots and cats");
+      console.log("http://www.virtualdrumming.com/drums/windows/hip-hop-drum-kits.html")
+      break;
+  };
 };
 
 function getTweets(){
@@ -37,7 +42,7 @@ function getTweets(){
 };
 
 function getSpotifyQuery(){
-  if (fourthItem = "undefined") {
+  if (fourthItem === "undefined") {
       fourthItem = "what's my age again"
     }; 
   spotifyQuery.search({ type: 'track', query: fourthItem }, function(err, data) {
@@ -74,3 +79,18 @@ function getMovie(){
   };
   });
 };
+
+function txtFile(){
+  fs.readFile("./random.txt", "utf8", function(err, data){
+    if (err) {
+      throw err;
+    } else if (!err) {
+      dataSplit = data.split(", ");
+      task = dataSplit[0];
+      fourthItem = dataSplit[1];
+      initializer();
+    };
+  });
+};
+
+initializer();
