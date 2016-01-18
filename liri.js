@@ -42,14 +42,14 @@ function getTweets(){
 };
 
 function getSpotifyQuery(){
-  if (fourthItem === "undefined") {
-      fourthItem = "what's my age again"
-    }; 
-  spotifyQuery.search({ type: 'track', query: fourthItem }, function(err, data) {
+  if (fourthItem === undefined) {
+      fourthItem = "what's my age again";
+      console.log(fourthItem);
+    } spotifyQuery.search({ type: 'track', query: fourthItem }, function(err, data) {
     if ( err ) {
         console.log('Error occurred: ' + err);
         return;
-    } else if (!err) {
+    } else {
       console.log("Are any of these songs what you are looking for?");
       console.log("");
       for (var i = 0; i < data.tracks.items.length; i++) {
@@ -64,10 +64,11 @@ function getSpotifyQuery(){
   };
 
 function getMovie(){
-  request('http://www.omdbapi.com/?t='+fourthItem+'&y=&plot=short&r=json', function (error, response, body) {
-  if (fourthItem === 'undefined') {
+  if (fourthItem === undefined) {
     fourthItem = "Mr. Nobody";
-  } else if (!error && response.statusCode == 200) {
+  };
+  request('http://www.omdbapi.com/?t='+fourthItem+'&y=&plot=short&r=json', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
     body = JSON.parse(body);
     console.log("Title: "+body.Title);
     console.log("Year: "+body.Year);
