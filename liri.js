@@ -23,6 +23,8 @@ function initializer(){
       console.log("Boots and cats and boots and cats and boots and cats and boots and cats");
       console.log("http://www.virtualdrumming.com/drums/windows/hip-hop-drum-kits.html")
       break;
+    default:
+      console.log("Please enter a valid command! Liri understands my-tweets, spotify-this-song 'song title', movie-this 'movie title', and do-what-it-says.")
   };
 };
 
@@ -36,7 +38,7 @@ function getTweets(){
         };
       } else if (error) {
         console.log(error);
-      }
+      };
     });
 };
 
