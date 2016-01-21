@@ -1,3 +1,4 @@
+debugger;
 var twitterKeysPage = require("./keys.js");
 var spotifyQuery = require('spotify');
 var request = require('request');
@@ -35,6 +36,17 @@ function getTweets(){
         console.log("Here are your last 20 tweets:");
         for (var i = 0; i < 20; i++) {
           console.log((i+1)+". "+tweets[i].text);
+          var twitterTweets = {
+            userTweets: tweets[i].text
+          };
+          fs.appendFile("./log.txt"," " + twitterTweets.userTweets + " " + task + " ", "utf8", function(err){
+            if (err) {
+              console.log(err);
+            } else if (!err) {
+              console.log(twitterTweets.userTweets);
+              console.log(task);
+            };
+          });
         };
       } else if (error) {
         console.log(error);
@@ -46,7 +58,8 @@ function getSpotifyQuery(){
   if (fourthItem === undefined) {
       fourthItem = "what's my age again";
       console.log(fourthItem);
-    } spotifyQuery.search({ type: 'track', query: fourthItem }, function(err, data) {
+  }; 
+  spotifyQuery.search({ type: 'track', query: fourthItem }, function(err, data) {
     if ( err ) {
         console.log('Error occurred: ' + err);
         return;
@@ -59,6 +72,20 @@ function getSpotifyQuery(){
         console.log("Album: "+data.tracks.items[i].album.name);
         console.log("Link: "+data.tracks.items[i].href);
         console.log("");
+        var songInfo = {
+          song: data.tracks.items[i].name,
+          artist: data.tracks.items[i].artists[0].name,
+          album: data.tracks.items[i].album.name,
+          link: data.tracks.items[i].href
+        };
+        fs.appendFile("./log.txt", " " + songInfo.song + " " + songInfo.artist + " " + songInfo.album + " " + songInfo.link + " " + " " + task + " " + fourthItem + " ", "utf8", function(err){
+          if (err) {
+            console.log(err);
+          } else if (!err) {
+            console.log(songInfo);
+            console.log(task);
+          };
+        });
         };
       };
     });
@@ -80,6 +107,26 @@ function getMovie(){
     console.log("Actors: "+body.Actors);
     console.log("RottenTomatoes Rating: "+body.tomatoRating);
     console.log("RottenTomatoes Link: "+body.tomatoURL);
+    console.log("");
+    var movieInfo = {
+      title: body.Title,
+      year: body.Year,
+      imdbRating: body.imdbRating,
+      country: body.Country,
+      language: body.Language,
+      plot: body.Plot,
+      actors: body.Actors,
+      rottentomatoesrating: body.tomatoRating,
+      rottentomatoeslink: body.tomatoURL
+    };
+    fs.appendFile("./log.txt", " " + movieInfo.title + " " + movieInfo.year + " " + movieInfo.imdbRating + " " + movieInfo.country + " " + movieInfo.language + " " + movieInfo.plot + " " + movieInfo.actors + " " + movieInfo.rottentomatoesrating + " " + movieInfo.rottentomatoeslink + " " + task, "utf8",function(err){
+      if (err) {
+        console.log(err);
+      } else if (!err) {
+        console.log(movieInfo);
+        console.log(task);
+      };
+    });
   };
   });
 };
